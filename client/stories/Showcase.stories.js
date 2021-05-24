@@ -8,7 +8,5 @@ export default {
 
 const Template = (args) => <Showcase {...args} />;
 
-export const Showcase = Template.bind({});
-Showcase.args = {
-  arts: {},
-};
+export const ShowcaseExemple = Template.bind({});
+ShowcaseExemple.args = {};
