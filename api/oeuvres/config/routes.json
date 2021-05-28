@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/oeuvres",
+      "handler": "oeuvres.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/oeuvres/count",
+      "handler": "oeuvres.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/oeuvres/:id",
+      "handler": "oeuvres.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/oeuvres",
+      "handler": "oeuvres.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/oeuvres/:id",
+      "handler": "oeuvres.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/oeuvres/:id",
+      "handler": "oeuvres.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

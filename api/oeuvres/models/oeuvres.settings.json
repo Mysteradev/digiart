@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "oeuvres",
+  "info": {
+    "name": "Oeuvres",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 200,
+      "required": true
+    },
+    "author": {
+      "plugin": "admin",
+      "model": "user"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "mainColor": {
+      "type": "string"
+    },
+    "pictures": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "slug": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    }
+  }
+}

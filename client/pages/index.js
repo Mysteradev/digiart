@@ -4,8 +4,10 @@ import { Button, Col, Container, Row } from "reactstrap";
 import { BsFillCaretRightFill } from "react-icons/bs";
 import Showcase from "../components/Showcase";
 import styles from "../styles/Home.module.css";
+import client from "../apollo-client";
+import { gql } from "@apollo/client";
 
-export default function Home() {
+export default function Home({ spotlightArts }) {
   return (
     <>
       <Head>
@@ -15,46 +17,48 @@ export default function Home() {
       </Head>
 
       <main>
-        <Container fluid="lg" className="">
-          <Row className="d-flex align-items-center">
-            <Col xs="12" sm="12" lg="5">
-              <h1 className="font-weight-bold mb-3">
-                Nous aidons les artistes à développer leur{" "}
-                <span className="important-word">business...</span>
-              </h1>
-              <p className="secondary-text mb-5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                et lacinia nunc, quis laoreet libero. Nullam ornare ut lorem
-                vitae tincidunt. Nullam lacinia ut massa in venenatis. Phasellus
-                vestibulum et sapien et gravida. Phasellus varius ac leo id
-                ultricies. Nunc dapibus, eros nec gravida placerat, neque augue
-                convallis tellus, id varius justo felis nec velit.
-              </p>
+        <div className="head-content">
+          <Container fluid="lg">
+            <Row className="d-flex align-items-center">
+              <Col xs="12" sm="12" lg="5">
+                <h1 className="font-weight-bold mb-3">
+                  Nous aidons les artistes à développer leur{" "}
+                  <span className="important-word">business...</span>
+                </h1>
+                <p className="secondary-text mb-5">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Aliquam et lacinia nunc, quis laoreet libero. Nullam ornare ut
+                  lorem vitae tincidunt. Nullam lacinia ut massa in venenatis.
+                  Phasellus vestibulum et sapien et gravida. Phasellus varius ac
+                  leo id ultricies. Nunc dapibus, eros nec gravida placerat,
+                  neque augue convallis tellus, id varius justo felis nec velit.
+                </p>
 
-              <Row>
-                <Col>
-                  <Button color="primary">Commencer à vendre</Button>
-                </Col>
-                <Col>
-                  <Button color="primary" outline>
-                    Consulter les oeuvres <BsFillCaretRightFill />
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
+                <Row>
+                  <Col>
+                    <Button color="primary">Commencer à vendre</Button>
+                  </Col>
+                  <Col>
+                    <Button color="primary" outline>
+                      Consulter les oeuvres <BsFillCaretRightFill />
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
 
-            <Col className="d-none d-lg-block" lg="7">
-              <Image
-                src="/images/rocket.png"
-                alt="Picture of a girl on a rocket"
-                width={863}
-                height={863}
-              />
-            </Col>
-          </Row>
-        </Container>
+              <Col className="d-none d-lg-block" lg="7">
+                <Image
+                  src="/images/rocket.png"
+                  alt="Picture of a girl on a rocket"
+                  width={863}
+                  height={863}
+                />
+              </Col>
+            </Row>
+          </Container>
+        </div>
 
-        <Showcase />
+        <Showcase arts={spotlightArts} isTop />
       </main>
 
       <div className={styles.main}>
@@ -112,4 +116,30 @@ export default function Home() {
       </footer>
     </>
   );
+}
+
+export async function getStaticProps(context) {
+  const { data } = await client.query({
+    query: gql`
+      query Oeuvres {
+        randomOeuvres(limit: 3) {
+          id
+          title
+          description
+          price
+          slug
+          pictures {
+            url
+            alternativeText
+          }
+        }
+      }
+    `,
+  });
+
+  return {
+    props: { spotlightArts: data.randomOeuvres },
+
+    revalidate: 10,
+  };
 }

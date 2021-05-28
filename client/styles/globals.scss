@@ -23,8 +23,17 @@ p {
   font-family: "Roboto", sans-serif;
 }
 
-main {
+.head-content {
   background-color: $lightgrey;
+  min-height: 85vh;
+
+  @include media-breakpoint-down(lg) {
+    min-height: 80vh;
+  }
+
+  @include media-breakpoint-down(md) {
+    min-height: 50vh;
+  }
 }
 
 .important-word {
